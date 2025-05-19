@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mhizha 101</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #f0f4ff, #d9e4ff);
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .game-container {
+      max-width: 400px;
+      width: 100%;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+    }
+    .question {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      background-color: #4a90e2;
+      color: white;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #357ac9;
+    }
+    .score {
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    .character {
+      margin-bottom: 10px;
+    }
+    .character img {
+      max-width: 100px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="character">
+      <img src="https://i.imgur.com/2DhmtJ4.png" alt="Character" />
+      <div><strong>Coach Mhizha</strong> - Business Mentor</div>
+    </div>
+    <div class="question" id="question">Loading...</div>
+    <div class="options" id="options"></div>
+    <div class="score" id="score">Score: 0</div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "What is the primary goal of an entrepreneur?",
+        options: [
+          "To avoid risk",
+          "To create and grow value",
+          "To follow instructions",
+          "To maintain the status quo"
+        ],
+        answer: 1
+      },
+      {
+        question: "Which of these is a fixed cost in business?",
+        options: ["Rent", "Raw materials", "Commission", "Packaging"],
+        answer: 0
+      },
+      {
+        question: "What does CEO stand for?",
+        options: ["Chief Engagement Officer", "Chief Executive Officer", "Creative Executive Operator", "Certified Equity Owner"],
+        answer: 1
+      },
+      {
+        question: "A good manager must be able to:",
+        options: ["Avoid feedback", "Micromanage", "Delegate tasks", "Ignore team input"],
+        answer: 2
+      },
+      {
+        question: "Which tool is best for brainstorming business ideas?",
+        options: ["Spreadsheet", "Mind map", "Invoice", "Ledger"],
+        answer: 1
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      document.getElementById("question").innerText = q.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(idx);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(idx) {
+      if (idx === questions[currentQuestion].answer) {
+        score += 10;
+      }
+      document.getElementById("score").innerText = `Score: ${score}`;
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        document.getElementById("question").innerText = "Level complete!";
+        document.getElementById("options").innerHTML = "Well done, Mhizha!";
+      }
+    }
+
+    window.onload = showQuestion;
+  </script>
+</body>
+</html>
